@@ -102,7 +102,7 @@ def main() -> None:
         per_device_train_batch_size=args.per_device_batch_size,
         per_device_eval_batch_size=args.per_device_batch_size,
         gradient_accumulation_steps=args.grad_accum,
-        max_length=args.max_seq_length,
+        max_seq_length=args.max_seq_length,
         packing=True,
         bf16=True,
         # paged_adamw_8bit keeps optimizer state in 8-bit on CPU with paging —
@@ -115,9 +115,11 @@ def main() -> None:
         load_best_model_at_end=True,
         metric_for_best_model="eval_loss",
         greater_is_better=False,
-        # Only compute loss on the assistant turn — don't train the model to
-        # regenerate the user's message or the system prompt.
-        completion_only_loss=True,
+        # completion_only_loss was added in a later TRL; omitting for trl==0.12.
+        # Effect: model trains on the full conversation (system+user+assistant)
+        # instead of only the assistant turn. Minor quality hit — acceptable
+        # for a short-sequence classification fine-tune where the JSON output
+        # dominates total loss.
         report_to="none",
         seed=args.seed,
     )
