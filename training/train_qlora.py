@@ -102,7 +102,7 @@ def main() -> None:
         per_device_train_batch_size=args.per_device_batch_size,
         per_device_eval_batch_size=args.per_device_batch_size,
         gradient_accumulation_steps=args.grad_accum,
-        max_seq_length=args.max_seq_length,
+        max_length=args.max_seq_length,
         packing=True,
         bf16=True,
         # paged_adamw_8bit keeps optimizer state in 8-bit on CPU with paging —
