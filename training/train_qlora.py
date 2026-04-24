@@ -103,7 +103,11 @@ def main() -> None:
         per_device_eval_batch_size=args.per_device_batch_size,
         gradient_accumulation_steps=args.grad_accum,
         max_seq_length=args.max_seq_length,
-        packing=True,
+        # trl 0.12's packing path expects a "text" field, but we use
+        # conversational "messages" format. Disabling packing lets the
+        # trainer auto-apply the chat template per sample. ~15% throughput
+        # cost at our short sequence lengths — not worth the extra plumbing.
+        packing=False,
         bf16=True,
         # paged_adamw_8bit keeps optimizer state in 8-bit on CPU with paging —
         # big memory win for QLoRA, minimal speed cost.
