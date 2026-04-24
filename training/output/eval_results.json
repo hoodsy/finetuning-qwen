@@ -1,0 +1,62 @@
+{
+  "fine_tuned": {
+    "metrics": {
+      "n_rows": 2688,
+      "format_failures": 0,
+      "format_failure_rate": 0.0,
+      "category_accuracy": 0.9992559523809523,
+      "intent_accuracy": 0.9836309523809523,
+      "urgency_accuracy": 0.8995535714285714,
+      "sentiment_accuracy": 0.8939732142857143,
+      "urgency_high_recall": 0.77,
+      "sentiment_frustrated_recall": 0.8884615384615384
+    },
+    "raw_sample": [
+      "{\"category\":\"ACCOUNT\",\"intent\":\"edit_account\",\"urgency\":\"low\",\"sentiment\":\"neutral\"}",
+      "{\"category\":\"FEEDBACK\",\"intent\":\"complaint\",\"urgency\":\"medium\",\"sentiment\":\"confused\"}",
+      "{\"category\":\"DELIVERY\",\"intent\":\"delivery_period\",\"urgency\":\"low\",\"sentiment\":\"confused\"}",
+      "{\"category\":\"FEEDBACK\",\"intent\":\"complaint\",\"urgency\":\"medium\",\"sentiment\":\"frustrated\"}",
+      "{\"category\":\"CANCEL\",\"intent\":\"check_cancellation_fee\",\"urgency\":\"low\",\"sentiment\":\"neutral\"}"
+    ]
+  },
+  "base_qwen2.5_3b": {
+    "metrics": {
+      "n_rows": 2688,
+      "format_failures": 7,
+      "format_failure_rate": 0.0026041666666666665,
+      "category_accuracy": 0.8225446428571429,
+      "intent_accuracy": 0.24516369047619047,
+      "urgency_accuracy": 0.40066964285714285,
+      "sentiment_accuracy": 0.609375,
+      "urgency_high_recall": 0.17,
+      "sentiment_frustrated_recall": 0.6192307692307693
+    },
+    "raw_sample": [
+      "{\"category\": \"ACCOUNT\", \"intent\": \"update_account_information\", \"urgency\": \"medium\", \"sentiment\": \"neutral\"}",
+      "{\"category\":\"SUBSCRIPTION\",\"intent\":\"track_order\",\"urgency\":\"medium\",\"sentiment\":\"confused\"}",
+      "{\"category\":\"DELIVERY\",\"intent\":\"track_order\",\"urgency\":\"medium\",\"sentiment\":\"neutral\"}",
+      "{\"category\":\"INVOICE\",\"intent\":\"get_refund\",\"urgency\":\"medium\",\"sentiment\":\"frustrated\"}",
+      "{\"category\":\"REFUND\",\"intent\":\"cancel_order\",\"urgency\":\"medium\",\"sentiment\":\"confused\"}"
+    ]
+  },
+  "gpt-4o-mini": {
+    "metrics": {
+      "n_rows": 2688,
+      "format_failures": 2688,
+      "format_failure_rate": 1.0,
+      "category_accuracy": 0.0,
+      "intent_accuracy": 0.0,
+      "urgency_accuracy": 0.0,
+      "sentiment_accuracy": 0.0,
+      "urgency_high_recall": 0.0,
+      "sentiment_frustrated_recall": 0.0
+    },
+    "raw_sample": [
+      "__ERROR__ RateLimitError(\"Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}}\")",
+      "__ERROR__ RateLimitError(\"Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}}\")",
+      "__ERROR__ RateLimitError(\"Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}}\")",
+      "__ERROR__ RateLimitError(\"Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}}\")",
+      "__ERROR__ RateLimitError(\"Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}}\")"
+    ]
+  }
+}
