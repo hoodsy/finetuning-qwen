@@ -63,6 +63,19 @@ def main() -> None:
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
 
+    # ---------- Convert conversational format → "text" field ----------
+    # trl 0.12's SFTTrainer doesn't auto-detect `messages` format. Apply the
+    # model's chat template now to produce a single "text" string per row.
+    def _to_text(example: dict) -> dict:
+        return {
+            "text": tokenizer.apply_chat_template(
+                example["messages"], tokenize=False
+            )
+        }
+
+    train_ds = train_ds.map(_to_text, remove_columns=["messages"])
+    val_ds = val_ds.map(_to_text, remove_columns=["messages"])
+
     # ---------- Base model: 4-bit NF4 with double-quant, bf16 compute ----------
     bnb_config = BitsAndBytesConfig(
         load_in_4bit=True,
@@ -103,10 +116,10 @@ def main() -> None:
         per_device_eval_batch_size=args.per_device_batch_size,
         gradient_accumulation_steps=args.grad_accum,
         max_seq_length=args.max_seq_length,
-        # trl 0.12's packing path expects a "text" field, but we use
-        # conversational "messages" format. Disabling packing lets the
-        # trainer auto-apply the chat template per sample. ~15% throughput
-        # cost at our short sequence lengths — not worth the extra plumbing.
+        dataset_text_field="text",
+        # Packing disabled: trl 0.12's pack path has shape assumptions that
+        # fight our pre-templated chat format. ~15% throughput cost at these
+        # short sequence lengths — cheaper than fighting the library.
         packing=False,
         bf16=True,
         # paged_adamw_8bit keeps optimizer state in 8-bit on CPU with paging —
