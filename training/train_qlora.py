@@ -70,10 +70,13 @@ def main() -> None:
         bnb_4bit_use_double_quant=True,
         bnb_4bit_compute_dtype=torch.bfloat16,
     )
+    # device_map={"": 0} forces all modules onto GPU 0. Using "auto" sometimes
+    # triggers false-positive CPU offload decisions even when the 4-bit model
+    # fits easily in VRAM (common gotcha on H100 with small models).
     model = AutoModelForCausalLM.from_pretrained(
         BASE_MODEL,
         quantization_config=bnb_config,
-        device_map="auto",
+        device_map={"": 0},
         torch_dtype=torch.bfloat16,
     )
     # Silence cache warnings during training — generation cache is irrelevant here.

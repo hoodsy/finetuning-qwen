@@ -195,7 +195,7 @@ def run_local(label: str, model_path: str, inputs: list[list[dict]], batch_size:
     model = AutoModelForCausalLM.from_pretrained(
         model_path,
         torch_dtype=torch.bfloat16,
-        device_map="auto",
+        device_map={"": 0},
     )
     model.eval()
     print(f"=== {label}: generating ({len(inputs)} rows) ===")

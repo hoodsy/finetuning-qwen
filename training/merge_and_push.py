@@ -47,7 +47,7 @@ def main() -> None:
     base = AutoModelForCausalLM.from_pretrained(
         BASE_MODEL,
         torch_dtype=torch.bfloat16,
-        device_map="auto",
+        device_map={"": 0},
     )
 
     print(f"Attaching adapter from {adapter_dir}...")
